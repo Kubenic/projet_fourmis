@@ -4,6 +4,6 @@
 public class Main {
     public static void main(String[] args){
         //Fenetre fenetre = new Fenetre(800,600);
-        new Menu();
+        Menu menu = new Menu();
     }
 }

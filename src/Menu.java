@@ -43,6 +43,8 @@ public class Menu extends JFrame implements ActionListener {
 
         this.pan.add(this.bValidation);
         this.pan.add(this.bAnnulation);
+        this.bValidation.addActionListener(this);
+        this.bAnnulation.addActionListener(this);
 
         this.setContentPane(this.pan);
         this.setVisible(true);
@@ -54,8 +56,8 @@ public class Menu extends JFrame implements ActionListener {
             int largeur = Integer.parseInt(this.tLargeur.getText());
             int hauteur = Integer.parseInt(this.tHauteur.getText());
             int fourmis = Integer.parseInt(this.tFourmis.getText());
-            System.out.println("KJZDBZBHZDBHZDBHLBHLJZDBHLJDZBHLZBHLJZ");
             new Fenetre(largeur, hauteur, fourmis);
+            this.dispose();
         } else if(event.getSource() == this.bAnnulation) {
             this.dispose();
         }
