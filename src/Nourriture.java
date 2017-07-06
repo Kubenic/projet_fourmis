@@ -1,6 +1,3 @@
-/**
- * Created by adrienpayen on 06/07/2017.
- */
 public class Nourriture {
     private int x;
     private int y;

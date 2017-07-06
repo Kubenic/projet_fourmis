@@ -5,9 +5,6 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import javax.swing.* ;
 
-/**
- * Created by kuben on 05/07/17.
- */
 public class Fenetre extends JPanel implements ActionListener {
     private int width;
     private int height;
@@ -19,7 +16,7 @@ public class Fenetre extends JPanel implements ActionListener {
     private ArrayList<Nourriture> stockNourriture = new ArrayList<Nourriture>();
     private Fourmilliere fourmilliere;
     private Timer timer;
-    private int MoveStep = 4;
+    private final int MOVESTEP = 4;
 
 
     public void actionPerformed(ActionEvent ev) {
@@ -45,10 +42,10 @@ public class Fenetre extends JPanel implements ActionListener {
         this.frame.setSize(this.width, this.height);
 
         this.contenu = this.frame.getContentPane();
-        //this.panel = new Panneau();
         contenu.add(this);
 
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.frame.setResizable(false);
 
         timer.start();
         this.frame.setVisible(true);
@@ -85,48 +82,47 @@ public class Fenetre extends JPanel implements ActionListener {
     public void moveFourmis(){
         for(int i=0; i < stockFourmis.size(); i++) {
             Fourmis fourmis = stockFourmis.get(i);
-
             int option = Helper.RandomNumber(0, 7);
-            if (option == 0 && fourmis.getX() - this.MoveStep < 0) {
+
+            if (option == 0 && fourmis.getX() - this.MOVESTEP < 0) {
                 option = 1;
-            } else if (option == 1 && fourmis.getX() + this.MoveStep > this.width) {
+            } else if (option == 1 && fourmis.getX() + this.MOVESTEP > this.width) {
                 option = 0;
-            } else if (option == 2 && fourmis.getY() - this.MoveStep < 0) {
+            } else if (option == 2 && fourmis.getY() - this.MOVESTEP < 0) {
                 option = 3;
-            } else if (option == 3 && fourmis.getY() + this.MoveStep > this.height) {
+            } else if (option == 3 && fourmis.getY() + this.MOVESTEP > this.height) {
                 option = 2;
-            } else if (option == 4 && fourmis.getX() - this.MoveStep < 0 && fourmis.getY() + this.MoveStep > this.height ){
+            } else if (option == 4 && fourmis.getX() - this.MOVESTEP < 0 && fourmis.getY() + this.MOVESTEP > this.height ){
                 option = 6;
-            } else if (option == 5 && fourmis.getX() + this.MoveStep > this.width && fourmis.getY() + this.MoveStep > this.height){
+            } else if (option == 5 && fourmis.getX() + this.MOVESTEP > this.width && fourmis.getY() + this.MOVESTEP > this.height){
                 option = 7;
-            } else if (option == 6 && fourmis.getX() + this.MoveStep > this.width && fourmis.getY() - this.MoveStep < 0){
+            } else if (option == 6 && fourmis.getX() + this.MOVESTEP > this.width && fourmis.getY() - this.MOVESTEP < 0){
                 option = 4;
-            }else if (option == 7 && fourmis.getX() - this.MoveStep < 0 && fourmis.getY() - this.MoveStep < 0){
+            }else if (option == 7 && fourmis.getX() - this.MOVESTEP < 0 && fourmis.getY() - this.MOVESTEP < 0){
                 option = 5;
             }
 
-            if(option == 0) {
-                fourmis.setX(fourmis.getX() - this.MoveStep);
+            if (option == 0) {
+                fourmis.setX(fourmis.getX() - this.MOVESTEP);
             } else if (option == 1) {
-                fourmis.setX(fourmis.getX() + this.MoveStep);
+                fourmis.setX(fourmis.getX() + this.MOVESTEP);
             } else if (option == 2) {
-                fourmis.setY(fourmis.getY() - this.MoveStep);
+                fourmis.setY(fourmis.getY() - this.MOVESTEP);
             } else if (option == 3) {
-                fourmis.setY(fourmis.getY() + this.MoveStep);
+                fourmis.setY(fourmis.getY() + this.MOVESTEP);
             } else if (option == 4) {
-                fourmis.setX(fourmis.getX() - this.MoveStep);
-                fourmis.setY(fourmis.getY() + this.MoveStep);
+                fourmis.setX(fourmis.getX() - this.MOVESTEP);
+                fourmis.setY(fourmis.getY() + this.MOVESTEP);
             } else if (option == 5) {
-                fourmis.setX(fourmis.getX() + this.MoveStep);
-                fourmis.setY(fourmis.getY() + this.MoveStep);
+                fourmis.setX(fourmis.getX() + this.MOVESTEP);
+                fourmis.setY(fourmis.getY() + this.MOVESTEP);
             } else if (option == 6) {
-                fourmis.setX(fourmis.getX() + this.MoveStep);
-                fourmis.setY(fourmis.getY() - this.MoveStep);
+                fourmis.setX(fourmis.getX() + this.MOVESTEP);
+                fourmis.setY(fourmis.getY() - this.MOVESTEP);
             } else if (option == 7) {
-                fourmis.setX(fourmis.getX() - this.MoveStep);
-                fourmis.setY(fourmis.getY() - this.MoveStep);
+                fourmis.setX(fourmis.getX() - this.MOVESTEP);
+                fourmis.setY(fourmis.getY() - this.MOVESTEP);
             }
-
             getNourriture(fourmis);
         }
     }
@@ -136,14 +132,15 @@ public class Fenetre extends JPanel implements ActionListener {
             Nourriture nourriture = stockNourriture.get(i);
 
             if ((fourmis.getX() >= nourriture.getX() && fourmis.getX() <= (nourriture.getX() + nourriture.getWidth())) &&
-                (fourmis.getY() >= nourriture.getY() && fourmis.getY() <= (nourriture.getY() + nourriture.getHeight())) &&
-                (!fourmis.getNourriture())) {
+                    (fourmis.getY() >= nourriture.getY() && fourmis.getY() <= (nourriture.getY() + nourriture.getHeight())) &&
+                    (!fourmis.getNourriture())) {
 
                 Color color = new Color(249, 3, 0);
 
                 fourmis.setNourriture(true);
                 fourmis.setColor(color);
                 stockNourriture.remove(nourriture);
+                fourmis.setY(fourmis.getY() + this.MOVESTEP);
             }
         }
     }
@@ -152,7 +149,7 @@ public class Fenetre extends JPanel implements ActionListener {
         super.paintComponent(g);
         g.setColor(new Color(68,108,179));
         g.fillRect(this.fourmilliere.getX(),this.fourmilliere.getY(),this.fourmilliere.getWidth(),this.fourmilliere.getHeight());
-       for(int i=0; i < this.stockFourmis.size(); i++){
+        for(int i=0; i < this.stockFourmis.size(); i++){
             Fourmis fourmis = stockFourmis.get(i);
             g.setColor(fourmis.getColor());
             g.fillRect(fourmis.getX(),fourmis.getY(),fourmis.getWidth(),fourmis.getHeight());

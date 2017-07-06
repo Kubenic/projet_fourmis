@@ -1,8 +1,4 @@
-/**
- * Created by kuben on 06/07/17.
- */
 public class Fourmilliere {
-
     private int x;
     private int y;
     private int width;
