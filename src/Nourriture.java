@@ -19,6 +19,12 @@ public class Nourriture {
     public void setStock(int stock) {
         this.stock = stock;
     }
+    public void setX(int x){
+        this.x = x;
+    }
+    public void setY(int y){
+        this.y = y;
+    }
     public int getX(){
         return this.x;
     }

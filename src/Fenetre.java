@@ -54,10 +54,17 @@ public class Fenetre extends JPanel implements ActionListener {
     }
 
     public void addFourmilliere(){
-        //int locX = Helper.RandomNumber(0,this.width);
-        //int locY = Helper.RandomNumber(0,this.height);
+        int locX = Helper.RandomNumber(0,this.width);
+        int locY = Helper.RandomNumber(0,this.height);
 
         this.fourmilliere = new Fourmilliere(50,50);
+        while((this.fourmilliere.getX()+this.fourmilliere.getWidth() > this.width)
+                || (this.fourmilliere.getY()+this.fourmilliere.getHeight() >this.height)){
+            locX = Helper.RandomNumber(0,this.width);
+            locY = Helper.RandomNumber(0,this.height);
+            this.fourmilliere.setX(locX);
+            this.fourmilliere.setY(locY);
+        }
     }
 
     public void addFourmis(){
@@ -86,8 +93,14 @@ public class Fenetre extends JPanel implements ActionListener {
 
                 Nourriture nourriture = new Nourriture(locX,locY);
 
+                while((nourriture.getX() + nourriture.getWidth() > this.width)
+                        || nourriture.getY() + nourriture.getHeight() > this.height){
+                    locX = Helper.RandomNumber(0,this.width - size3);
+                    locY = Helper.RandomNumber(0,this.height - size3);
+                    nourriture.setX(locX);
+                    nourriture.setY(locY);
+                }
                 nourriture.setStock(stock);
-
                 nourriture.setWidth(size3);
                 nourriture.setHeight(size3);
 
@@ -99,39 +112,59 @@ public class Fenetre extends JPanel implements ActionListener {
 
                 Nourriture nourriture = new Nourriture(locX,locY);
 
-                nourriture.setStock(stock);
+                while((nourriture.getX() + nourriture.getWidth() > this.width)
+                        || nourriture.getY() + nourriture.getHeight() > this.height){
+                    locX = Helper.RandomNumber(0,this.width - size3);
+                    locY = Helper.RandomNumber(0,this.height - size3);
+                    nourriture.setX(locX);
+                    nourriture.setY(locY);
+                }
 
+                nourriture.setStock(stock);
                 nourriture.setWidth(size2);
                 nourriture.setHeight(size2);
 
                 this.stockNourriture.add(nourriture);
-                System.out.println("x : " + nourriture.getX() + " || y : " + nourriture.getY());
+                //System.out.println("x : " + nourriture.getX() + " || y : " + nourriture.getY());
             } else if (stock >= 10) {
                 int locX = Helper.RandomNumber(0,this.width - size1);
                 int locY = Helper.RandomNumber(0,this.height - size1);
 
                 Nourriture nourriture = new Nourriture(locX,locY);
 
-                nourriture.setStock(stock);
+                while((nourriture.getX() + nourriture.getWidth() > this.width)
+                        || nourriture.getY() + nourriture.getHeight() > this.height){
+                    locX = Helper.RandomNumber(0,this.width - size3);
+                    locY = Helper.RandomNumber(0,this.height - size3);
+                    nourriture.setX(locX);
+                    nourriture.setY(locY);
+                }
 
+                nourriture.setStock(stock);
                 nourriture.setWidth(size1);
                 nourriture.setHeight(size1);
 
                 this.stockNourriture.add(nourriture);
-                System.out.println("x : " + nourriture.getX() + " || y : " + nourriture.getY());
+                //System.out.println("x : " + nourriture.getX() + " || y : " + nourriture.getY());
             } else if (stock < 10) {
                 int locX = Helper.RandomNumber(0,this.width - size);
                 int locY = Helper.RandomNumber(0,this.height - size);
 
                 Nourriture nourriture = new Nourriture(locX,locY);
 
+                while((nourriture.getX() + nourriture.getWidth() > this.width)
+                        || nourriture.getY() + nourriture.getHeight() > this.height){
+                    locX = Helper.RandomNumber(0,this.width - size3);
+                    locY = Helper.RandomNumber(0,this.height - size3);
+                    nourriture.setX(locX);
+                    nourriture.setY(locY);
+                }
                 nourriture.setStock(stock);
-
                 nourriture.setWidth(size);
                 nourriture.setHeight(size);
 
                 this.stockNourriture.add(nourriture);
-                System.out.println("x : " + nourriture.getX() + " || y : " + nourriture.getY());
+                //System.out.println("x : " + nourriture.getX() + " || y : " + nourriture.getY());
             }
 
         }
@@ -149,17 +182,17 @@ public class Fenetre extends JPanel implements ActionListener {
 
             if (option == 0 && fourmis.getX() - this.MOVESTEP < 0) {
                 option = 1;
-            } else if (option == 1 && fourmis.getX() + this.MOVESTEP > this.width) {
+            } else if (option == 1 && (fourmis.getX()+ fourmis.getWidth()) + this.MOVESTEP > this.width) {
                 option = 0;
             } else if (option == 2 && fourmis.getY() - this.MOVESTEP < 0) {
                 option = 3;
-            } else if (option == 3 && fourmis.getY() + this.MOVESTEP > this.height) {
+            } else if (option == 3 && (fourmis.getY()+fourmis.getHeight()) + this.MOVESTEP > this.height) {
                 option = 2;
-            } else if (option == 4 && fourmis.getX() - this.MOVESTEP < 0 && fourmis.getY() + this.MOVESTEP > this.height ){
+            } else if (option == 4 && fourmis.getX() - this.MOVESTEP < 0 && (fourmis.getY()+fourmis.getHeight()) + this.MOVESTEP > this.height ){
                 option = 6;
-            } else if (option == 5 && fourmis.getX() + this.MOVESTEP > this.width && fourmis.getY() + this.MOVESTEP > this.height){
+            } else if (option == 5 && (fourmis.getX()+ fourmis.getWidth()) + this.MOVESTEP > this.width && (fourmis.getY()+fourmis.getHeight()) + this.MOVESTEP > this.height){
                 option = 7;
-            } else if (option == 6 && fourmis.getX() + this.MOVESTEP > this.width && fourmis.getY() - this.MOVESTEP < 0){
+            } else if (option == 6 && (fourmis.getX()+ fourmis.getWidth()) + this.MOVESTEP > this.width && fourmis.getY() - this.MOVESTEP < 0){
                 option = 4;
             }else if (option == 7 && fourmis.getX() - this.MOVESTEP < 0 && fourmis.getY() - this.MOVESTEP < 0){
                 option = 5;
