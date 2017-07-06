@@ -37,8 +37,8 @@ public class Fenetre extends JPanel implements ActionListener {
         this.timer = new Timer(20,this);
 
         this.addFourmilliere();
-        this.addFourmis();
         this.addNourriture();
+        this.addFourmis();
 
         this.frame = new JFrame();
         this.frame.setTitle("La fourmilière");
@@ -85,8 +85,7 @@ public class Fenetre extends JPanel implements ActionListener {
         for(int i=0; i < stockFourmis.size(); i++) {
             Fourmis fourmis = stockFourmis.get(i);
 
-            int option = Helper.RandomNumber(0, 3);
-
+            int option = Helper.RandomNumber(0, 7);
             if (option == 0 && fourmis.getX() - this.MoveStep < 0) {
                 option = 1;
             } else if (option == 1 && fourmis.getX() + this.MoveStep > this.width) {
@@ -95,9 +94,17 @@ public class Fenetre extends JPanel implements ActionListener {
                 option = 3;
             } else if (option == 3 && fourmis.getY() + this.MoveStep > this.height) {
                 option = 2;
+            } else if (option == 4 && fourmis.getX() - this.MoveStep < 0 && fourmis.getY() + this.MoveStep > this.height ){
+                option = 6;
+            } else if (option == 5 && fourmis.getX() + this.MoveStep > this.width && fourmis.getY() + this.MoveStep > this.height){
+                option = 7;
+            } else if (option == 6 && fourmis.getX() + this.MoveStep > this.width && fourmis.getY() - this.MoveStep < 0){
+                option = 4;
+            }else if (option == 7 && fourmis.getX() - this.MoveStep < 0 && fourmis.getY() - this.MoveStep < 0){
+                option = 5;
             }
 
-            if (option == 0) {
+            if(option == 0) {
                 fourmis.setX(fourmis.getX() - this.MoveStep);
             } else if (option == 1) {
                 fourmis.setX(fourmis.getX() + this.MoveStep);
@@ -105,6 +112,18 @@ public class Fenetre extends JPanel implements ActionListener {
                 fourmis.setY(fourmis.getY() - this.MoveStep);
             } else if (option == 3) {
                 fourmis.setY(fourmis.getY() + this.MoveStep);
+            } else if (option == 4) {
+                fourmis.setX(fourmis.getX() - this.MoveStep);
+                fourmis.setY(fourmis.getY() + this.MoveStep);
+            } else if (option == 5) {
+                fourmis.setX(fourmis.getX() + this.MoveStep);
+                fourmis.setY(fourmis.getY() + this.MoveStep);
+            } else if (option == 6) {
+                fourmis.setX(fourmis.getX() + this.MoveStep);
+                fourmis.setY(fourmis.getY() - this.MoveStep);
+            } else if (option == 7) {
+                fourmis.setX(fourmis.getX() - this.MoveStep);
+                fourmis.setY(fourmis.getY() - this.MoveStep);
             }
         }
     }
