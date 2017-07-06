@@ -9,21 +9,26 @@ public class Fourmis {
     private int width;
     private int height;
     private Color color;
+    private boolean nourriture;
 
     public Fourmis(){
         this.width = 3;
         this.height = 3;
-        this.color = new Color(0,0,0,1);
     }
 
     public Fourmis(int x, int y){
         this.width = 3;
         this.height = 3;
-        this.color = new Color(0,0,0,1);
         this.x = x;
         this.y = y;
     }
 
+    public void setNourriture(boolean nourriture) {
+        this.nourriture = nourriture;
+    }
+    public boolean getNourriture() {
+        return this.nourriture;
+    }
     public void setX(int x){
         this.x = x;
     }
@@ -41,6 +46,9 @@ public class Fourmis {
     }
     public int getHeight(){
         return this.height;
+    }
+    public void setColor(Color color) {
+        this.color = color;
     }
     public Color getColor(){
         return this.color;

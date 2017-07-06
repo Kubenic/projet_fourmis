@@ -67,6 +67,7 @@ public class Fenetre extends JPanel implements ActionListener {
             Fourmis fourmis = new Fourmis();
             fourmis.setX(this.fourmilliere.getX());
             fourmis.setY(this.fourmilliere.getY());
+            fourmis.setColor(new Color(0,0,0));
             this.stockFourmis.add(fourmis);
         }
     }
@@ -106,6 +107,25 @@ public class Fenetre extends JPanel implements ActionListener {
             } else if (option == 3) {
                 fourmis.setY(fourmis.getY() + this.MoveStep);
             }
+
+            getNourriture(fourmis);
+        }
+    }
+
+    public void getNourriture(Fourmis fourmis){
+        for(int i=0; i < stockNourriture.size(); i++) {
+            Nourriture nourriture = stockNourriture.get(i);
+
+            if ((fourmis.getX() >= nourriture.getX() && fourmis.getX() <= (nourriture.getX() + nourriture.getWidth())) &&
+                (fourmis.getY() >= nourriture.getY() && fourmis.getY() <= (nourriture.getY() + nourriture.getHeight())) &&
+                (!fourmis.getNourriture())) {
+
+                Color color = new Color(249, 3, 0);
+
+                fourmis.setNourriture(true);
+                fourmis.setColor(color);
+                stockNourriture.remove(nourriture);
+            }
         }
     }
 
@@ -115,12 +135,12 @@ public class Fenetre extends JPanel implements ActionListener {
         g.fillRect(this.fourmilliere.getX(),this.fourmilliere.getY(),this.fourmilliere.getWidth(),this.fourmilliere.getHeight());
        for(int i=0; i < this.stockFourmis.size(); i++){
             Fourmis fourmis = stockFourmis.get(i);
-            g.setColor(new Color(0,0,0));
+            g.setColor(fourmis.getColor());
             g.fillRect(fourmis.getX(),fourmis.getY(),fourmis.getWidth(),fourmis.getHeight());
         }
         for(int i=0; i < this.stockNourriture.size(); i++){
             Nourriture nourriture = stockNourriture.get(i);
-            g.setColor(new Color(32, 142, 15));
+            g.setColor(new Color(154, 251, 131));
             g.fillRect(nourriture.getX(),nourriture.getY(),nourriture.getWidth(),nourriture.getHeight());
         }
     }
