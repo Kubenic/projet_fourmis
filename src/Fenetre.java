@@ -13,6 +13,7 @@ public class Fenetre extends JPanel implements ActionListener {
     private int nbNourriture;
     private ArrayList<Fourmis> stockFourmis = new ArrayList<Fourmis>();
     private ArrayList<Nourriture> stockNourriture = new ArrayList<Nourriture>();
+    private ArrayList<Pheromones> stockPheromones = new ArrayList<Pheromones>();
     private Fourmilliere fourmilliere;
     private Timer timer;
     private final int ANIMATION_TIME = 20;
@@ -21,7 +22,9 @@ public class Fenetre extends JPanel implements ActionListener {
 
     public void actionPerformed(ActionEvent ev) {
         if (ev.getSource() == timer) {
+            this.changePheromones();
             this.moveFourmis();
+            this.setPheromones();
             this.repaint();
         }
     }
@@ -223,6 +226,29 @@ public class Fenetre extends JPanel implements ActionListener {
         }
     }
 
+    public void setPheromones(){
+        for(int i =0; i < this.stockFourmis.size(); i++){
+            Fourmis fourmis = this.stockFourmis.get(i);
+            if(fourmis.getNourriture()){
+                this.stockPheromones.add(new Pheromones(fourmis.getX(),fourmis.getY()));
+            }
+        }
+    }
+
+    public void changePheromones(){
+        for(int i = 0; i < this.stockPheromones.size(); i++){
+            Pheromones pheromones = this.stockPheromones.get(i);
+            pheromones.hit();
+
+            if(pheromones.getHp() <= 0){
+                this.stockPheromones.remove(i);
+                i--;
+            }
+        }
+
+
+    }
+
     public void getNourriture(Fourmis fourmis){
         for(int i=0; i < stockNourriture.size(); i++) {
             Nourriture nourriture = stockNourriture.get(i);
@@ -257,6 +283,11 @@ public class Fenetre extends JPanel implements ActionListener {
         g.setColor(new Color(68,108,179));
         g.fillOval(this.fourmilliere.getX(),this.fourmilliere.getY(),this.fourmilliere.getWidth(),this.fourmilliere.getHeight());
 
+        for(int i=0; i < this.stockPheromones.size(); i++){
+            Pheromones pheromones = this.stockPheromones.get(i);
+            g.setColor(new Color(179, 6, 0));
+            g.fillOval(pheromones.getX(),pheromones.getY(),(pheromones.getWidth()-((pheromones.getWidth()/pheromones.getHp())*10000)),(pheromones.getHeight()-((pheromones.getHeight()/pheromones.getHp())*10000)));
+        }
         for(int i=0; i < this.stockFourmis.size(); i++){
             Fourmis fourmis = stockFourmis.get(i);
 
