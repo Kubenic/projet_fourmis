@@ -1,3 +1,5 @@
+import com.sun.tools.javac.util.StringUtils;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,6 +11,8 @@ public class Fenetre extends JPanel implements ActionListener {
     private int height;
     private Container contenu;
     private JFrame frame;
+    private JLabel lNbNourritureStat = new JLabel("Nombre :");
+    private JLabel lNbFourmisStat = new JLabel("Fourmis :");
     private int nbFourmis;
     private int nbNourriture;
     private ArrayList<Fourmis> stockFourmis = new ArrayList<Fourmis>();
@@ -18,16 +22,6 @@ public class Fenetre extends JPanel implements ActionListener {
     private Timer timer;
     private final int ANIMATION_TIME = 20;
     private final int MOVE_STEP = 4;
-
-
-    public void actionPerformed(ActionEvent ev) {
-        if (ev.getSource() == timer) {
-            this.changePheromones();
-            this.moveFourmis();
-            this.setPheromones();
-            this.repaint();
-        }
-    }
 
     public Fenetre(int width, int height, int nbFourmis, int nbNourriture){
         this.width = width;
@@ -43,6 +37,7 @@ public class Fenetre extends JPanel implements ActionListener {
         this.frame = new JFrame();
         this.frame.setTitle("La fourmilière");
         this.frame.setSize(this.width, this.height);
+        this.frame.add(this.lNbNourritureStat);
 
         this.contenu = this.frame.getContentPane();
 
@@ -68,7 +63,7 @@ public class Fenetre extends JPanel implements ActionListener {
         }
     }
 
-    public void addFourmis(){
+    public void addFourmis() {
         for(int i =0; i< nbFourmis; i++){
             Fourmis fourmis = new Fourmis();
             fourmis.setX(this.fourmilliere.getX());
@@ -87,7 +82,7 @@ public class Fenetre extends JPanel implements ActionListener {
         for(int i =0; i < nbNourriture; i++){
 
             int stock = Helper.RandomNumber(1, 20);
-
+            System.out.println(stock);
             if (stock >= 20) {
                 int locX = Helper.RandomNumber(0,this.width - size3);
                 int locY = Helper.RandomNumber(0,this.height - size3);
@@ -277,11 +272,26 @@ public class Fenetre extends JPanel implements ActionListener {
         }
     }
 
+    public void actionPerformed(ActionEvent ev) {
+        if (ev.getSource() == timer) {
+            this.changePheromones();
+            this.moveFourmis();
+            this.setPheromones();
+
+            this.lNbNourritureStat.setText("Nb nourriture : " +String.valueOf(this.stockNourriture.size()));
+            this.lNbFourmisStat.setText("Nb de fourmis : " +String.valueOf(this.stockFourmis.size()));
+
+            this.repaint();
+        }
+    }
+
     public void paintComponent(Graphics g){
         super.paintComponent(g);
 
         g.setColor(new Color(68,108,179));
         g.fillOval(this.fourmilliere.getX(),this.fourmilliere.getY(),this.fourmilliere.getWidth(),this.fourmilliere.getHeight());
+        g.drawString(this.lNbNourritureStat.getText(), this.getWidth() / 2, 10);
+        g.drawString(this.lNbFourmisStat.getText(), this.getWidth() / 2, 25);
 
         for(int i=0; i < this.stockPheromones.size(); i++){
             Pheromones pheromones = this.stockPheromones.get(i);
