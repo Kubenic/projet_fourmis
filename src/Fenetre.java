@@ -1,5 +1,3 @@
-import com.sun.tools.javac.util.StringUtils;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -173,8 +171,51 @@ public class Fenetre extends JPanel implements ActionListener {
     public void moveFourmis(){
         for(int i=0; i < stockFourmis.size(); i++) {
             Fourmis fourmis = stockFourmis.get(i);
-
-            int option = Helper.RandomNumber(0, 7);
+            ArrayList<Integer> possibilities = new ArrayList<Integer>();
+            for(int j = 0; j < this.stockPheromones.size(); j++){
+                Pheromones pheromones = this.stockPheromones.get(j);
+                if(((fourmis.getX()-this.MOVE_STEP) == pheromones.getX()) && (fourmis.getY() == pheromones.getY())){
+                    //System.out.println("STEP 0");
+                    possibilities.add(0);
+                }
+                if(((fourmis.getX()+this.MOVE_STEP) == pheromones.getX()) && (fourmis.getY() == pheromones.getY())){
+                    //System.out.println("STEP 1");
+                    possibilities.add(1);
+                }
+                if((fourmis.getY()-this.MOVE_STEP == pheromones.getY()) && (fourmis.getX() == pheromones.getX())){
+                    //System.out.println("STEP 2");
+                    possibilities.add(2);
+                }
+                if(((fourmis.getY()+this.MOVE_STEP) == pheromones.getY()) && (fourmis.getX() == pheromones.getX())){
+                    //System.out.println("STEP 3");
+                    possibilities.add(3);
+                }
+                if(((fourmis.getX()-this.MOVE_STEP) == pheromones.getX()) && ((fourmis.getY()+this.MOVE_STEP) == pheromones.getY())){
+                    //System.out.println("STEP 4");
+                    possibilities.add(4);
+                }
+                if(((fourmis.getX()+this.MOVE_STEP) == pheromones.getX()) && ((fourmis.getY()+this.MOVE_STEP) == pheromones.getY())){
+                    //System.out.println("STEP 5");
+                    possibilities.add(5);
+                }
+                if(((fourmis.getX()+this.MOVE_STEP) == pheromones.getX()) && ((fourmis.getY()-this.MOVE_STEP)==pheromones.getY())){
+                    //System.out.println("STEP 6");
+                    possibilities.add(6);
+                }
+                if(((fourmis.getX()-this.MOVE_STEP) == pheromones.getX()) && ((fourmis.getY()-this.MOVE_STEP) == pheromones.getY())){
+                    //System.out.println("STEP 7");
+                    possibilities.add(7);
+                }
+            }
+            System.out.println(possibilities);
+            int option;
+            if(possibilities.size() > 0){
+                int dice = Helper.RandomNumber(0, possibilities.size()-1);
+                option = possibilities.get(dice);
+                System.out.println(dice);
+            }else {
+                option = Helper.RandomNumber(0, 7);
+            }
 
             
             if (option == 0 && fourmis.getX() - this.MOVE_STEP < 0) {
