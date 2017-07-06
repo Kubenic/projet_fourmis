@@ -13,7 +13,7 @@ public class Fenetre extends JPanel implements ActionListener {
     private int height;
     private Container contenu;
     private JFrame frame;
-    private int nbFourmis = 10;
+    private int nbFourmis;
     private ArrayList<Fourmis> stockFourmis = new ArrayList<Fourmis>();
     private Fourmilliere fourmilliere;
     private Timer timer;
@@ -25,21 +25,27 @@ public class Fenetre extends JPanel implements ActionListener {
             this.repaint();// this will call at every 1 second
         }
     }
-    public Fenetre(int width, int height){
-
+    public Fenetre(int width, int height, int nbFourmis){
         this.width = width;
         this.height = height;
+        this.nbFourmis = nbFourmis;
+        this.timer = new Timer(20,this);
+
         this.addFourmilliere();
         this.addFourmis();
+
         this.frame = new JFrame();
-        this.frame.setTitle("LA BAMBOULA");
+        this.frame.setTitle("La fourmilière");
         this.frame.setSize(this.width, this.height);
+
         this.contenu = this.frame.getContentPane();
         //this.panel = new Panneau();
         contenu.add(this);
+
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.timer = new Timer(20,this);
-            timer.start();
+
+
+        timer.start();
         this.frame.setVisible(true);
     }
     public void addFourmilliere(){
