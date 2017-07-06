@@ -17,6 +17,7 @@ public class Fenetre extends JPanel implements ActionListener {
     private ArrayList<Fourmis> stockFourmis = new ArrayList<Fourmis>();
     private Fourmilliere fourmilliere;
     private Timer timer;
+    private int MoveStep = 4;
 
 
     public void actionPerformed(ActionEvent ev) {
@@ -44,7 +45,6 @@ public class Fenetre extends JPanel implements ActionListener {
 
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-
         timer.start();
         this.frame.setVisible(true);
     }
@@ -65,13 +65,29 @@ public class Fenetre extends JPanel implements ActionListener {
         }
     }
     public void moveFourmis(){
-        for(int i=0; i < stockFourmis.size(); i++){
+        for(int i=0; i < stockFourmis.size(); i++) {
             Fourmis fourmis = stockFourmis.get(i);
 
-            if(i%3 ==0){
-                fourmis.setX(fourmis.getX()-1);
-            }else{
-                fourmis.setX(fourmis.getX()+1);
+            int option = Helper.RandomNumber(0, 3);
+
+            if (option == 0 && fourmis.getX() - this.MoveStep < 0) {
+                option = 1;
+            } else if (option == 1 && fourmis.getX() + this.MoveStep > this.width) {
+                option = 0;
+            } else if (option == 2 && fourmis.getY() - this.MoveStep < 0) {
+                option = 3;
+            } else if (option == 3 && fourmis.getY() + this.MoveStep > this.height) {
+                option = 2;
+            }
+
+            if (option == 0) {
+                fourmis.setX(fourmis.getX() - this.MoveStep);
+            } else if (option == 1) {
+                fourmis.setX(fourmis.getX() + this.MoveStep);
+            } else if (option == 2) {
+                fourmis.setY(fourmis.getY() - this.MoveStep);
+            } else if (option == 3) {
+                fourmis.setY(fourmis.getY() + this.MoveStep);
             }
         }
     }
