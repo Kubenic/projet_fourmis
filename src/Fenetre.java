@@ -53,7 +53,7 @@ public class Fenetre extends JPanel implements ActionListener {
         int locX = Helper.RandomNumber(0,this.width);
         int locY = Helper.RandomNumber(0,this.height);
 
-        this.fourmilliere = new Fourmilliere(50,50);
+        this.fourmilliere = new Fourmilliere(locX,locY);
         while((this.fourmilliere.getX()+this.fourmilliere.getWidth() > this.width)
                 || (this.fourmilliere.getY()+this.fourmilliere.getHeight() >this.height)){
             locX = Helper.RandomNumber(0,this.width);
@@ -176,6 +176,7 @@ public class Fenetre extends JPanel implements ActionListener {
 
             int option = Helper.RandomNumber(0, 7);
 
+            
             if (option == 0 && fourmis.getX() - this.MOVE_STEP < 0) {
                 option = 1;
             } else if (option == 1 && (fourmis.getX()+ fourmis.getWidth()) + this.MOVE_STEP > this.width) {
