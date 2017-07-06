@@ -174,38 +174,42 @@ public class Fenetre extends JPanel implements ActionListener {
             ArrayList<Integer> possibilities = new ArrayList<Integer>();
             for(int j = 0; j < this.stockPheromones.size(); j++){
                 Pheromones pheromones = this.stockPheromones.get(j);
-                if(((fourmis.getX()-this.MOVE_STEP) == pheromones.getX()) && (fourmis.getY() == pheromones.getY())){
-                    //System.out.println("STEP 0");
-                    possibilities.add(0);
+                if(fourmis.getLastX()!=pheromones.getX() && fourmis.getLastY() != pheromones.getY()){
+                    if(((fourmis.getX()-this.MOVE_STEP) == pheromones.getX()) && (fourmis.getY() == pheromones.getY())){
+                        //System.out.println("STEP 0");
+                        possibilities.add(0);
+                    }
+                    if(((fourmis.getX()+this.MOVE_STEP) == pheromones.getX()) && (fourmis.getY() == pheromones.getY())){
+                        //System.out.println("STEP 1");
+                        possibilities.add(1);
+                    }
+                    if((fourmis.getY()-this.MOVE_STEP == pheromones.getY()) && (fourmis.getX() == pheromones.getX())){
+                        //System.out.println("STEP 2");
+                        possibilities.add(2);
+                    }
+                    if(((fourmis.getY()+this.MOVE_STEP) == pheromones.getY()) && (fourmis.getX() == pheromones.getX())){
+                        //System.out.println("STEP 3");
+                        possibilities.add(3);
+                    }
+                    if(((fourmis.getX()-this.MOVE_STEP) == pheromones.getX()) && ((fourmis.getY()+this.MOVE_STEP) == pheromones.getY())){
+                        //System.out.println("STEP 4");
+                        possibilities.add(4);
+                    }
+                    if(((fourmis.getX()+this.MOVE_STEP) == pheromones.getX()) && ((fourmis.getY()+this.MOVE_STEP) == pheromones.getY())){
+                        //System.out.println("STEP 5");
+                        possibilities.add(5);
+                    }
+                    if(((fourmis.getX()+this.MOVE_STEP) == pheromones.getX()) && ((fourmis.getY()-this.MOVE_STEP)==pheromones.getY())){
+                        //System.out.println("STEP 6");
+                        possibilities.add(6);
+                    }
+                    if(((fourmis.getX()-this.MOVE_STEP) == pheromones.getX()) && ((fourmis.getY()-this.MOVE_STEP) == pheromones.getY())){
+
+                        //System.out.println("STEP 7");
+                        possibilities.add(7);
+                    }
                 }
-                if(((fourmis.getX()+this.MOVE_STEP) == pheromones.getX()) && (fourmis.getY() == pheromones.getY())){
-                    //System.out.println("STEP 1");
-                    possibilities.add(1);
-                }
-                if((fourmis.getY()-this.MOVE_STEP == pheromones.getY()) && (fourmis.getX() == pheromones.getX())){
-                    //System.out.println("STEP 2");
-                    possibilities.add(2);
-                }
-                if(((fourmis.getY()+this.MOVE_STEP) == pheromones.getY()) && (fourmis.getX() == pheromones.getX())){
-                    //System.out.println("STEP 3");
-                    possibilities.add(3);
-                }
-                if(((fourmis.getX()-this.MOVE_STEP) == pheromones.getX()) && ((fourmis.getY()+this.MOVE_STEP) == pheromones.getY())){
-                    //System.out.println("STEP 4");
-                    possibilities.add(4);
-                }
-                if(((fourmis.getX()+this.MOVE_STEP) == pheromones.getX()) && ((fourmis.getY()+this.MOVE_STEP) == pheromones.getY())){
-                    //System.out.println("STEP 5");
-                    possibilities.add(5);
-                }
-                if(((fourmis.getX()+this.MOVE_STEP) == pheromones.getX()) && ((fourmis.getY()-this.MOVE_STEP)==pheromones.getY())){
-                    //System.out.println("STEP 6");
-                    possibilities.add(6);
-                }
-                if(((fourmis.getX()-this.MOVE_STEP) == pheromones.getX()) && ((fourmis.getY()-this.MOVE_STEP) == pheromones.getY())){
-                    //System.out.println("STEP 7");
-                    possibilities.add(7);
-                }
+
             }
             System.out.println(possibilities);
             int option;
@@ -236,6 +240,8 @@ public class Fenetre extends JPanel implements ActionListener {
                 option = 5;
             }
 
+            fourmis.setLastX(fourmis.getX());
+            fourmis.setLastY(fourmis.getY());
             if (option == 0) {
                 fourmis.setX(fourmis.getX() - this.MOVE_STEP);
             } else if (option == 1) {

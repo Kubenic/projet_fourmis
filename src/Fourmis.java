@@ -7,6 +7,8 @@ public class Fourmis {
     private int height;
     private Color color;
     private boolean nourriture;
+    private int lastX;
+    private int lastY;
 
 
     public Fourmis(){
@@ -48,6 +50,23 @@ public class Fourmis {
     public void setColor(Color color) {
         this.color = color;
     }
+
+    public int getLastX() {
+        return lastX;
+    }
+
+    public int getLastY() {
+        return lastY;
+    }
+
+    public void setLastX(int lastX) {
+        this.lastX = lastX;
+    }
+
+    public void setLastY(int lastY) {
+        this.lastY = lastY;
+    }
+
     public Color getColor(){
         return this.color;
     }
