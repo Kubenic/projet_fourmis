@@ -1,9 +1,8 @@
-import java.awt.* ;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import javax.swing.* ;
 
 public class Fenetre extends JPanel implements ActionListener {
     private int width;
@@ -16,7 +15,8 @@ public class Fenetre extends JPanel implements ActionListener {
     private ArrayList<Nourriture> stockNourriture = new ArrayList<Nourriture>();
     private Fourmilliere fourmilliere;
     private Timer timer;
-    private final int MOVESTEP = 4;
+    private final int ANIMATION_TIME = 20;
+    private final int MOVE_STEP = 4;
 
 
     public void actionPerformed(ActionEvent ev) {
@@ -32,9 +32,7 @@ public class Fenetre extends JPanel implements ActionListener {
         this.nbFourmis = nbFourmis;
 
         this.nbNourriture = nbNourriture;
-
-        this.timer = new Timer(20,this);
-
+        this.timer = new Timer(this.ANIMATION_TIME,this);
         this.addFourmilliere();
         this.addNourriture();
         this.addFourmis();
@@ -180,44 +178,44 @@ public class Fenetre extends JPanel implements ActionListener {
 
             int option = Helper.RandomNumber(0, 7);
 
-            if (option == 0 && fourmis.getX() - this.MOVESTEP < 0) {
+            if (option == 0 && fourmis.getX() - this.MOVE_STEP < 0) {
                 option = 1;
-            } else if (option == 1 && (fourmis.getX()+ fourmis.getWidth()) + this.MOVESTEP > this.width) {
+            } else if (option == 1 && (fourmis.getX()+ fourmis.getWidth()) + this.MOVE_STEP > this.width) {
                 option = 0;
-            } else if (option == 2 && fourmis.getY() - this.MOVESTEP < 0) {
+            } else if (option == 2 && fourmis.getY() - this.MOVE_STEP < 0) {
                 option = 3;
-            } else if (option == 3 && (fourmis.getY()+fourmis.getHeight()) + this.MOVESTEP > this.height) {
+            } else if (option == 3 && (fourmis.getY()+fourmis.getHeight()) + this.MOVE_STEP > this.height) {
                 option = 2;
-            } else if (option == 4 && fourmis.getX() - this.MOVESTEP < 0 && (fourmis.getY()+fourmis.getHeight()) + this.MOVESTEP > this.height ){
+            } else if (option == 4 && fourmis.getX() - this.MOVE_STEP < 0 && (fourmis.getY()+fourmis.getHeight()) + this.MOVE_STEP > this.height ){
                 option = 6;
-            } else if (option == 5 && (fourmis.getX()+ fourmis.getWidth()) + this.MOVESTEP > this.width && (fourmis.getY()+fourmis.getHeight()) + this.MOVESTEP > this.height){
+            } else if (option == 5 && (fourmis.getX()+ fourmis.getWidth()) + this.MOVE_STEP > this.width && (fourmis.getY()+fourmis.getHeight()) + this.MOVE_STEP > this.height){
                 option = 7;
-            } else if (option == 6 && (fourmis.getX()+ fourmis.getWidth()) + this.MOVESTEP > this.width && fourmis.getY() - this.MOVESTEP < 0){
+            } else if (option == 6 && (fourmis.getX()+ fourmis.getWidth()) + this.MOVE_STEP > this.width && fourmis.getY() - this.MOVE_STEP < 0){
                 option = 4;
-            }else if (option == 7 && fourmis.getX() - this.MOVESTEP < 0 && fourmis.getY() - this.MOVESTEP < 0){
+            }else if (option == 7 && fourmis.getX() - this.MOVE_STEP < 0 && fourmis.getY() - this.MOVE_STEP < 0){
                 option = 5;
             }
 
             if (option == 0) {
-                fourmis.setX(fourmis.getX() - this.MOVESTEP);
+                fourmis.setX(fourmis.getX() - this.MOVE_STEP);
             } else if (option == 1) {
-                fourmis.setX(fourmis.getX() + this.MOVESTEP);
+                fourmis.setX(fourmis.getX() + this.MOVE_STEP);
             } else if (option == 2) {
-                fourmis.setY(fourmis.getY() - this.MOVESTEP);
+                fourmis.setY(fourmis.getY() - this.MOVE_STEP);
             } else if (option == 3) {
-                fourmis.setY(fourmis.getY() + this.MOVESTEP);
+                fourmis.setY(fourmis.getY() + this.MOVE_STEP);
             } else if (option == 4) {
-                fourmis.setX(fourmis.getX() - this.MOVESTEP);
-                fourmis.setY(fourmis.getY() + this.MOVESTEP);
+                fourmis.setX(fourmis.getX() - this.MOVE_STEP);
+                fourmis.setY(fourmis.getY() + this.MOVE_STEP);
             } else if (option == 5) {
-                fourmis.setX(fourmis.getX() + this.MOVESTEP);
-                fourmis.setY(fourmis.getY() + this.MOVESTEP);
+                fourmis.setX(fourmis.getX() + this.MOVE_STEP);
+                fourmis.setY(fourmis.getY() + this.MOVE_STEP);
             } else if (option == 6) {
-                fourmis.setX(fourmis.getX() + this.MOVESTEP);
-                fourmis.setY(fourmis.getY() - this.MOVESTEP);
+                fourmis.setX(fourmis.getX() + this.MOVE_STEP);
+                fourmis.setY(fourmis.getY() - this.MOVE_STEP);
             } else if (option == 7) {
-                fourmis.setX(fourmis.getX() - this.MOVESTEP);
-                fourmis.setY(fourmis.getY() - this.MOVESTEP);
+                fourmis.setX(fourmis.getX() - this.MOVE_STEP);
+                fourmis.setY(fourmis.getY() - this.MOVE_STEP);
             }
 
             getNourriture(fourmis);

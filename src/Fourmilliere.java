@@ -17,7 +17,7 @@ public class Fourmilliere {
             this.y = this.y+10;
         }
     }
-    
+
     public int getX(){
         return this.x;
     }
