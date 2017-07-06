@@ -22,7 +22,7 @@ public class Fenetre extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent ev) {
         if (ev.getSource() == timer) {
             this.moveFourmis();
-            this.repaint();// this will call at every 1 second
+            this.repaint();
         }
     }
 
@@ -30,7 +30,9 @@ public class Fenetre extends JPanel implements ActionListener {
         this.width = width;
         this.height = height;
         this.nbFourmis = nbFourmis;
+
         this.nbNourriture = nbNourriture;
+
         this.timer = new Timer(20,this);
 
         this.addFourmilliere();
@@ -133,6 +135,10 @@ public class Fenetre extends JPanel implements ActionListener {
             }
 
         }
+        /*this.stockNourriture.add(new Nourriture(0,0));
+        this.stockNourriture.add(new Nourriture(94,0));
+        this.stockNourriture.add(new Nourriture(94,94));
+        this.stockNourriture.add(new Nourriture(0,94));*/
     }
 
     public void moveFourmis(){

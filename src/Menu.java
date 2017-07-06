@@ -1,5 +1,3 @@
-import com.sun.tools.javac.util.StringUtils;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
