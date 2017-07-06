@@ -42,8 +42,8 @@ public class Fenetre extends JPanel implements ActionListener {
         this.frame.setSize(this.width, this.height);
 
         this.contenu = this.frame.getContentPane();
-        contenu.add(this);
 
+        contenu.add(this);
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.frame.setResizable(false);
 
@@ -52,15 +52,14 @@ public class Fenetre extends JPanel implements ActionListener {
     }
 
     public void addFourmilliere(){
-        Double locX = new Double(Math.random() * (this.width - 0));
-        Double locY = new Double(Math.random() * (this.height - 0));
-        this.fourmilliere = new Fourmilliere(locX.intValue(),locY.intValue());
+        //int locX = Helper.RandomNumber(0,this.width);
+        //int locY = Helper.RandomNumber(0,this.height);
+
+        this.fourmilliere = new Fourmilliere(50,50);
     }
 
     public void addFourmis(){
         for(int i =0; i< nbFourmis; i++){
-            //Double locX = new Double(Math.random() * (this.width - 0));
-            //Double locY = new Double(Math.random() * (this.height - 0));
             Fourmis fourmis = new Fourmis();
             fourmis.setX(this.fourmilliere.getX());
             fourmis.setY(this.fourmilliere.getY());
@@ -70,18 +69,76 @@ public class Fenetre extends JPanel implements ActionListener {
     }
 
     public void addNourriture(){
-        for(int i =0; i < nbNourriture; i++){
-            Double locX = new Double(Math.random() * (this.width - 0));
-            Double locY = new Double(Math.random() * (this.height - 0));
+        int size = 5;
+        int size1 = 10;
+        int size2 = 15;
+        int size3 = 20;
 
-            Nourriture nourriture = new Nourriture(locX.intValue(),locY.intValue());
-            this.stockNourriture.add(nourriture);
+        for(int i =0; i < nbNourriture; i++){
+
+            int stock = Helper.RandomNumber(1, 20);
+
+            if (stock >= 20) {
+                int locX = Helper.RandomNumber(0,this.width - size3);
+                int locY = Helper.RandomNumber(0,this.height - size3);
+
+                Nourriture nourriture = new Nourriture(locX,locY);
+
+                nourriture.setStock(stock);
+
+                nourriture.setWidth(size3);
+                nourriture.setHeight(size3);
+
+                this.stockNourriture.add(nourriture);
+                System.out.println("x : " + nourriture.getX() + " || y : " + nourriture.getY());
+            } else if (stock >= 15) {
+                int locX = Helper.RandomNumber(0,this.width - size2);
+                int locY = Helper.RandomNumber(0,this.height - size2);
+
+                Nourriture nourriture = new Nourriture(locX,locY);
+
+                nourriture.setStock(stock);
+
+                nourriture.setWidth(size2);
+                nourriture.setHeight(size2);
+
+                this.stockNourriture.add(nourriture);
+                System.out.println("x : " + nourriture.getX() + " || y : " + nourriture.getY());
+            } else if (stock >= 10) {
+                int locX = Helper.RandomNumber(0,this.width - size1);
+                int locY = Helper.RandomNumber(0,this.height - size1);
+
+                Nourriture nourriture = new Nourriture(locX,locY);
+
+                nourriture.setStock(stock);
+
+                nourriture.setWidth(size1);
+                nourriture.setHeight(size1);
+
+                this.stockNourriture.add(nourriture);
+                System.out.println("x : " + nourriture.getX() + " || y : " + nourriture.getY());
+            } else if (stock < 10) {
+                int locX = Helper.RandomNumber(0,this.width - size);
+                int locY = Helper.RandomNumber(0,this.height - size);
+
+                Nourriture nourriture = new Nourriture(locX,locY);
+
+                nourriture.setStock(stock);
+
+                nourriture.setWidth(size);
+                nourriture.setHeight(size);
+
+                this.stockNourriture.add(nourriture);
+                System.out.println("x : " + nourriture.getX() + " || y : " + nourriture.getY());
+            }
+
         }
     }
 
     public void moveFourmis(){
         for(int i=0; i < stockFourmis.size(); i++) {
             Fourmis fourmis = stockFourmis.get(i);
+
             int option = Helper.RandomNumber(0, 7);
 
             if (option == 0 && fourmis.getX() - this.MOVESTEP < 0) {
@@ -123,7 +180,9 @@ public class Fenetre extends JPanel implements ActionListener {
                 fourmis.setX(fourmis.getX() - this.MOVESTEP);
                 fourmis.setY(fourmis.getY() - this.MOVESTEP);
             }
+
             getNourriture(fourmis);
+            deposeNourriture(fourmis);
         }
     }
 
@@ -132,32 +191,54 @@ public class Fenetre extends JPanel implements ActionListener {
             Nourriture nourriture = stockNourriture.get(i);
 
             if ((fourmis.getX() >= nourriture.getX() && fourmis.getX() <= (nourriture.getX() + nourriture.getWidth())) &&
-                    (fourmis.getY() >= nourriture.getY() && fourmis.getY() <= (nourriture.getY() + nourriture.getHeight())) &&
-                    (!fourmis.getNourriture())) {
-
-                Color color = new Color(249, 3, 0);
+                (fourmis.getY() >= nourriture.getY() && fourmis.getY() <= (nourriture.getY() + nourriture.getHeight())) &&
+                (!fourmis.getNourriture())) {
 
                 fourmis.setNourriture(true);
-                fourmis.setColor(color);
-                stockNourriture.remove(nourriture);
-                fourmis.setY(fourmis.getY() + this.MOVESTEP);
+
+                if (nourriture.getStock() > 1) {
+                    nourriture.setStock(nourriture.getStock() - 1);
+                } else if (nourriture.getStock() == 1) {
+                    stockNourriture.remove(nourriture);
+                }
             }
+        }
+    }
+
+    public void deposeNourriture(Fourmis fourmis) {
+        if ((fourmis.getX() >= fourmilliere.getX() && fourmis.getX() <= (fourmilliere.getX() + fourmilliere.getWidth())) &&
+                (fourmis.getY() >= fourmilliere.getY() && fourmis.getY() <= (fourmilliere.getY() + fourmilliere.getHeight())) &&
+                (fourmis.getNourriture())) {
+
+            fourmis.setNourriture(false);
         }
     }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
+
         g.setColor(new Color(68,108,179));
-        g.fillRect(this.fourmilliere.getX(),this.fourmilliere.getY(),this.fourmilliere.getWidth(),this.fourmilliere.getHeight());
+        g.fillOval(this.fourmilliere.getX(),this.fourmilliere.getY(),this.fourmilliere.getWidth(),this.fourmilliere.getHeight());
+
         for(int i=0; i < this.stockFourmis.size(); i++){
             Fourmis fourmis = stockFourmis.get(i);
-            g.setColor(fourmis.getColor());
-            g.fillRect(fourmis.getX(),fourmis.getY(),fourmis.getWidth(),fourmis.getHeight());
+
+            if (!fourmis.getNourriture()) {
+                g.setColor(fourmis.getColor());
+                g.fillOval(fourmis.getX(),fourmis.getY(),fourmis.getWidth(),fourmis.getHeight());
+            } else {
+                g.setColor(fourmis.getColor());
+                g.fillOval(fourmis.getX(),fourmis.getY(),fourmis.getWidth(),fourmis.getHeight());
+
+                g.setColor(new Color(255, 198, 191));
+                g.fillOval(fourmis.getX()+2,fourmis.getY()+2,fourmis.getWidth()-5,fourmis.getHeight()-5);
+            }
         }
+
         for(int i=0; i < this.stockNourriture.size(); i++){
             Nourriture nourriture = stockNourriture.get(i);
-            g.setColor(new Color(154, 251, 131));
-            g.fillRect(nourriture.getX(),nourriture.getY(),nourriture.getWidth(),nourriture.getHeight());
+            g.setColor(new Color(251, 145, 0));
+            g.fillOval(nourriture.getX(),nourriture.getY(),nourriture.getWidth(),nourriture.getHeight());
         }
     }
 }

@@ -5,14 +5,15 @@ public class Fourmilliere {
     private int height;
 
     public Fourmilliere(int x, int y){
-        this.width = 10;
-        this.height = 10;
+        this.width = 50;
+        this.height = 50;
         this.x = x;
         this.y = y;
-        if(this.x < 10){
+
+        if (this.x < 10) {
             this.x = this.x+10;
         }
-        if(this.y < 10){
+        if (this.y < 10) {
             this.y = this.y+10;
         }
     }

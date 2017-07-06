@@ -8,14 +8,15 @@ public class Fourmis {
     private Color color;
     private boolean nourriture;
 
+
     public Fourmis(){
-        this.width = 3;
-        this.height = 3;
+        this.width = 10;
+        this.height = 10;
     }
 
     public Fourmis(int x, int y){
-        this.width = 3;
-        this.height = 3;
+        this.width = 10;
+        this.height = 10;
         this.x = x;
         this.y = y;
     }
