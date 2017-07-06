@@ -10,8 +10,8 @@ public class Nourriture {
     public Nourriture(int x, int y){
         this.x =x;
         this.y = y;
-        this.width = 10;
-        this.height = 10;
+        this.width = 4;
+        this.height = 4;
     }
     public int getX(){
         return this.x;

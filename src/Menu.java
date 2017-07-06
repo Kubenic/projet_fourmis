@@ -56,7 +56,8 @@ public class Menu extends JFrame implements ActionListener {
             int largeur = Integer.parseInt(this.tLargeur.getText());
             int hauteur = Integer.parseInt(this.tHauteur.getText());
             int fourmis = Integer.parseInt(this.tFourmis.getText());
-            new Fenetre(largeur, hauteur, fourmis);
+            int nourriture = Integer.parseInt(this.tNourriture.getText());
+            new Fenetre(largeur, hauteur, fourmis, nourriture);
             this.dispose();
         } else if(event.getSource() == this.bAnnulation) {
             this.dispose();

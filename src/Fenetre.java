@@ -14,7 +14,9 @@ public class Fenetre extends JPanel implements ActionListener {
     private Container contenu;
     private JFrame frame;
     private int nbFourmis;
+    private int nbNourriture;
     private ArrayList<Fourmis> stockFourmis = new ArrayList<Fourmis>();
+    private ArrayList<Nourriture> stockNourriture = new ArrayList<Nourriture>();
     private Fourmilliere fourmilliere;
     private Timer timer;
     private int MoveStep = 4;
@@ -26,14 +28,17 @@ public class Fenetre extends JPanel implements ActionListener {
             this.repaint();// this will call at every 1 second
         }
     }
-    public Fenetre(int width, int height, int nbFourmis){
+
+    public Fenetre(int width, int height, int nbFourmis, int nbNourriture){
         this.width = width;
         this.height = height;
         this.nbFourmis = nbFourmis;
+        this.nbNourriture = nbNourriture;
         this.timer = new Timer(20,this);
 
         this.addFourmilliere();
         this.addFourmis();
+        this.addNourriture();
 
         this.frame = new JFrame();
         this.frame.setTitle("La fourmilière");
@@ -48,11 +53,13 @@ public class Fenetre extends JPanel implements ActionListener {
         timer.start();
         this.frame.setVisible(true);
     }
+
     public void addFourmilliere(){
         Double locX = new Double(Math.random() * (this.width - 0));
         Double locY = new Double(Math.random() * (this.height - 0));
         this.fourmilliere = new Fourmilliere(locX.intValue(),locY.intValue());
     }
+
     public void addFourmis(){
         for(int i =0; i< nbFourmis; i++){
             //Double locX = new Double(Math.random() * (this.width - 0));
@@ -61,9 +68,19 @@ public class Fenetre extends JPanel implements ActionListener {
             fourmis.setX(this.fourmilliere.getX());
             fourmis.setY(this.fourmilliere.getY());
             this.stockFourmis.add(fourmis);
-
         }
     }
+
+    public void addNourriture(){
+        for(int i =0; i < nbNourriture; i++){
+            Double locX = new Double(Math.random() * (this.width - 0));
+            Double locY = new Double(Math.random() * (this.height - 0));
+
+            Nourriture nourriture = new Nourriture(locX.intValue(),locY.intValue());
+            this.stockNourriture.add(nourriture);
+        }
+    }
+
     public void moveFourmis(){
         for(int i=0; i < stockFourmis.size(); i++) {
             Fourmis fourmis = stockFourmis.get(i);
@@ -100,6 +117,11 @@ public class Fenetre extends JPanel implements ActionListener {
             Fourmis fourmis = stockFourmis.get(i);
             g.setColor(new Color(0,0,0));
             g.fillRect(fourmis.getX(),fourmis.getY(),fourmis.getWidth(),fourmis.getHeight());
+        }
+        for(int i=0; i < this.stockNourriture.size(); i++){
+            Nourriture nourriture = stockNourriture.get(i);
+            g.setColor(new Color(32, 142, 15));
+            g.fillRect(nourriture.getX(),nourriture.getY(),nourriture.getWidth(),nourriture.getHeight());
         }
     }
 }

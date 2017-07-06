@@ -15,6 +15,7 @@ public class Fourmis {
         this.height = 3;
         this.color = new Color(0,0,0,1);
     }
+
     public Fourmis(int x, int y){
         this.width = 3;
         this.height = 3;
@@ -22,6 +23,7 @@ public class Fourmis {
         this.x = x;
         this.y = y;
     }
+
     public void setX(int x){
         this.x = x;
     }
