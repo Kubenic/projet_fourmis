@@ -171,7 +171,7 @@ public class Fenetre extends JPanel implements ActionListener {
                 ArrayList<Integer> possibilities = new ArrayList<Integer>();
                 for(int j = 0; j < this.stockPheromones.size(); j++){
                     Pheromones pheromones = this.stockPheromones.get(j);
-                    if(fourmis.getLastX()!=pheromones.getX() && fourmis.getLastY() != pheromones.getY() && fourmis.getActualDifficulty() < 3){
+                    if(fourmis.getLastX()!=pheromones.getX() && fourmis.getLastY() != pheromones.getY() && !fourmis.getNourriture()){
                         if(((fourmis.getX()-this.MOVE_STEP) == pheromones.getX()) && (fourmis.getY() == pheromones.getY())){
                             possibilities.add(0);
                         }
@@ -201,10 +201,50 @@ public class Fenetre extends JPanel implements ActionListener {
 
                 }
 
-                int option;
+                int option = 0;
                 if(possibilities.size() > 0){
                     int dice = Helper.RandomNumber(0, possibilities.size()-1);
                     option = possibilities.get(dice);
+                }else if(fourmis.getNourriture()){
+                    if(fourmis.getX() > this.fourmilliere.getX() && fourmis.getY() == this.fourmilliere.getY()){
+                        option = 0;
+                    }else if(fourmis.getX() < this.fourmilliere.getX() && fourmis.getY() ==this.fourmilliere.getY()){
+                        option = 1;
+                    }else if(fourmis.getY() > this.fourmilliere.getY() && fourmis.getX() == this.fourmilliere.getX()){
+                        option = 2;
+                    }else if(fourmis.getY() < this.fourmilliere.getY() && fourmis.getX() == this.fourmilliere.getX()){
+                        option = 3;
+                    }else if(fourmis.getX() > this.fourmilliere.getX() && fourmis.getY() < this.fourmilliere.getY()){
+                        option = 4;
+                    }else if(fourmis.getX() < this.fourmilliere.getX() && fourmis.getY() < this.fourmilliere.getY()){
+                        option = 5;
+                    }else if(fourmis.getX() < this.fourmilliere.getX() && fourmis.getY() > this.fourmilliere.getY()){
+                        option = 6;
+                    }else if(fourmis.getX() > this.fourmilliere.getX() && fourmis.getY() > this.fourmilliere.getY()){
+                        option = 7;
+                    }
+
+                   /* if (option == 0) {
+                        fourmis.setX(fourmis.getX() - this.MOVE_STEP);
+                    } else if (option == 1) {
+                        fourmis.setX(fourmis.getX() + this.MOVE_STEP);
+                    } else if (option == 2) {
+                        fourmis.setY(fourmis.getY() - this.MOVE_STEP);
+                    } else if (option == 3) {
+                        fourmis.setY(fourmis.getY() + this.MOVE_STEP);
+                    } else if (option == 4) {
+                        fourmis.setX(fourmis.getX() - this.MOVE_STEP);
+                        fourmis.setY(fourmis.getY() + this.MOVE_STEP);
+                    } else if (option == 5) {
+                        fourmis.setX(fourmis.getX() + this.MOVE_STEP);
+                        fourmis.setY(fourmis.getY() + this.MOVE_STEP);
+                    } else if (option == 6) {
+                        fourmis.setX(fourmis.getX() + this.MOVE_STEP);
+                        fourmis.setY(fourmis.getY() - this.MOVE_STEP);
+                    } else if (option == 7) {
+                        fourmis.setX(fourmis.getX() - this.MOVE_STEP);
+                        fourmis.setY(fourmis.getY() - this.MOVE_STEP);
+                    }*/
                 }else {
                     option = Helper.RandomNumber(0, 7);
                 }
@@ -230,10 +270,10 @@ public class Fenetre extends JPanel implements ActionListener {
 
                 fourmis.setLastX(fourmis.getX());
                 fourmis.setLastY(fourmis.getY());
-                if(fourmis.getActualDifficulty() > 3){
+                /*if(fourmis.getActualDifficulty() > 3){
                     fourmis.setDifficulty(0);
                     fourmis.setStockPheromones(new ArrayList<Pheromones>());
-                }
+                }*/
 
                 if (option == 0) {
                     fourmis.setX(fourmis.getX() - this.MOVE_STEP);
@@ -328,7 +368,7 @@ public class Fenetre extends JPanel implements ActionListener {
             if (ev.getSource() == timer) {
                 this.changePheromones();
                 this.moveFourmis();
-                this.checkIfInPheromones();
+                //this.checkIfInPheromones();
                 this.setPheromones();
 
                 this.lNbNourritureStat.setText("Nb nourriture : " +String.valueOf(this.stockNourriture.size()));

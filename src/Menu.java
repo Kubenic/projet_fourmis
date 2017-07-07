@@ -212,6 +212,7 @@ public class Menu extends JFrame implements ActionListener {
 
                 new Fenetre(largeur, hauteur, fourmis, nourriture);
                 this.dispose();
+                //new Controller(largeur, hauteur, fourmis, nourriture);
             }
         } else if (event.getSource() == this.bSaveXmlConfig) {
             this.generateXmlConfig();
