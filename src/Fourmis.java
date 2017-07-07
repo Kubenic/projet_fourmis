@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Fourmis {
     private int x;
@@ -9,7 +10,8 @@ public class Fourmis {
     private boolean nourriture;
     private int lastX;
     private int lastY;
-
+    private ArrayList<Pheromones> stockPheromones = new ArrayList<Pheromones>();
+    private int difficulty = 0;
 
     public Fourmis(){
         this.width = 10;
@@ -69,5 +71,61 @@ public class Fourmis {
 
     public Color getColor(){
         return this.color;
+    }
+
+    public ArrayList<Pheromones> getStockPheromones() {
+        return stockPheromones;
+    }
+
+    public void setStockPheromones(ArrayList<Pheromones> stockPheromones) {
+        this.stockPheromones = stockPheromones;
+    }
+    public void addPheromones(Pheromones pheromones){
+        if(this.stockPheromones.size()<12) {
+            this.stockPheromones.add(pheromones);
+        }else{
+            this.stockPheromones.remove(0);
+            this.stockPheromones.add(pheromones);
+        }
+    }
+    public int getActualDifficulty(){
+        int bigCpt = 0;
+        //System.out.println(this.stockPheromones);
+        for(int i = 0; i < this.stockPheromones.size(); i++){
+            int cpt = 0;
+            for(int j =i+1; j<this.stockPheromones.size(); j++){
+                if(i%3==0){
+                    if(j%3==0){
+
+                        Pheromones base = this.stockPheromones.get(i);
+                        Pheromones toCheck = this.stockPheromones.get(j);
+                        if(base.getX() == toCheck.getX() && base.getY() == toCheck.getY()){
+                            cpt++;
+                        }
+                    }
+                }else{
+                    if(j%2==0){
+
+                        Pheromones base = this.stockPheromones.get(i);
+                        Pheromones toCheck = this.stockPheromones.get(j);
+                        if(base.getX() == toCheck.getX() && base.getY() == toCheck.getY()){
+                            cpt++;
+                        }
+                    }
+                }
+            }
+            if(cpt > bigCpt){
+                bigCpt = cpt;
+            }
+        }
+        if(bigCpt > this.difficulty){
+            this.difficulty = bigCpt;
+        }
+
+        return this.difficulty;
+    }
+
+    public void setDifficulty(int difficulty) {
+        this.difficulty = difficulty;
     }
 }
